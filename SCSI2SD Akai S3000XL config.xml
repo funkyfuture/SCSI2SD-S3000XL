@@ -1,14 +1,21 @@
+<!-- saved w/ scsi2sd-util publ. 2018-09-26 for firmware 4.8.01 -->
 <SCSI2SD>
-<SCSITarget id="5">
-	<enabled>true</enabled>
+<BoardConfig>
+	<!-- ********************************************************
+	Enable the onboard active terminator (v5.1 or greater).
+	Both ends of the SCSI chain should be terminated. Disable
+	only if the SCSI2SD is in the middle of a chain with other
+	devices.
+	********************************************************* -->
+	<enableTerminator>true</enableTerminator>
 	<unitAttention>false</unitAttention>
 	<parity>false</parity>
 	<!-- ********************************************************
 	Only set to true when using with a fast SCSI2 host
  	controller. This can cause problems with older/slower
-	 hardware.
+	hardware.
 	********************************************************* -->
-	<enableScsi2>true</enableScsi2>
+	<enableScsi2>false</enableScsi2>
 	<!-- ********************************************************
 	Setting to 'true' will result in increased performance at the
 	cost of lower noise immunity.
@@ -17,10 +24,51 @@
 	cables.
 	********************************************************* -->
 	<disableGlitchFilter>false</disableGlitchFilter>
+	<enableCache>false</enableCache>
+	<enableDisconnect>false</enableDisconnect>
+	<!-- ********************************************************
+	Respond to very short duration selection attempts. This supports
+	non-standard hardware, but is generally safe to enable.
+	Required for Philips P2000C.
+	********************************************************* -->
+	<selLatch>false</selLatch>
+	<!-- ********************************************************
+	Convert luns to IDs. The unit must already be configured to respond
+	on the ID. Allows dual drives to be accessed from a 
+	XEBEC S1410 SASI bridge.
+	eg. Configured for dual drives as IDs 0 and 1, but the XEBEC will
+	access the second disk as ID0, lun 1.
+	See ttp://bitsavers.trailing-edge.com/pdf/xebec/104524C_S1410Man_Aug83.pdf
+	********************************************************* -->
+	<mapLunsToIds>false</mapLunsToIds>
+	<!-- ********************************************************
+	Delay (in milliseconds) before responding to a SCSI selection.
+	255 (auto) sets it to 0 for SCSI2 hosts and 1ms otherwise.
+	Some samplers need this set to 1 manually.
+	********************************************************* -->
+	<selectionDelay>255</selectionDelay>
+	<!-- ********************************************************
+	Startup delay (in seconds) before responding to the SCSI bus 
+	after power on. Default = 0.
+	********************************************************* -->
+	<startupDelay>0</startupDelay>
+	<!-- ********************************************************
+	Speed limit the SCSI interface. This is the -max- speed the 
+	device will run at. The actual spee depends on the capability
+	of the host controller.
+	0	No limit
+	1	Async 1.5MB/s
+	********************************************************* -->
+	<scsiSpeed>0</scsiSpeed>
+</BoardConfig>
+<SCSITarget id="5">
+	<enabled>true</enabled>
 
 	<!-- ********************************************************
 	Space separated list. Available options:
 	apple		Returns Apple-specific mode pages
+	omti		OMTI host non-standard link control
+	xebec		XEBEC ignore step options in control byte
 	********************************************************* -->
 	<quirks></quirks>
 
@@ -79,29 +127,25 @@
 
 	<!-- 16 character serial number -->
 	<serial>1234567812345678</serial>
+
+	<!-- Custom mode pages, base64 encoded, up to 1024 bytes.-->
+	<modePages>
+
+	</modePages>
+
+	<!-- Custom inquiry VPD pages, base64 encoded, up to 1024 bytes.-->
+	<vpd>
+
+	</vpd>
 </SCSITarget>
 <SCSITarget id="4">
 	<enabled>true</enabled>
-	<unitAttention>false</unitAttention>
-	<parity>false</parity>
-	<!-- ********************************************************
-	Only set to true when using with a fast SCSI2 host
- 	controller. This can cause problems with older/slower
-	 hardware.
-	********************************************************* -->
-	<enableScsi2>true</enableScsi2>
-	<!-- ********************************************************
-	Setting to 'true' will result in increased performance at the
-	cost of lower noise immunity.
-	Only set to true when using short cables with only 1 or two
-	devices. This should remain off when using external SCSI1 DB25
-	cables.
-	********************************************************* -->
-	<disableGlitchFilter>false</disableGlitchFilter>
 
 	<!-- ********************************************************
 	Space separated list. Available options:
 	apple		Returns Apple-specific mode pages
+	omti		OMTI host non-standard link control
+	xebec		XEBEC ignore step options in control byte
 	********************************************************* -->
 	<quirks></quirks>
 
@@ -160,29 +204,25 @@
 
 	<!-- 16 character serial number -->
 	<serial>                </serial>
+
+	<!-- Custom mode pages, base64 encoded, up to 1024 bytes.-->
+	<modePages>
+
+	</modePages>
+
+	<!-- Custom inquiry VPD pages, base64 encoded, up to 1024 bytes.-->
+	<vpd>
+
+	</vpd>
 </SCSITarget>
 <SCSITarget id="3">
 	<enabled>true</enabled>
-	<unitAttention>false</unitAttention>
-	<parity>false</parity>
-	<!-- ********************************************************
-	Only set to true when using with a fast SCSI2 host
- 	controller. This can cause problems with older/slower
-	 hardware.
-	********************************************************* -->
-	<enableScsi2>true</enableScsi2>
-	<!-- ********************************************************
-	Setting to 'true' will result in increased performance at the
-	cost of lower noise immunity.
-	Only set to true when using short cables with only 1 or two
-	devices. This should remain off when using external SCSI1 DB25
-	cables.
-	********************************************************* -->
-	<disableGlitchFilter>false</disableGlitchFilter>
 
 	<!-- ********************************************************
 	Space separated list. Available options:
 	apple		Returns Apple-specific mode pages
+	omti		OMTI host non-standard link control
+	xebec		XEBEC ignore step options in control byte
 	********************************************************* -->
 	<quirks></quirks>
 
@@ -241,29 +281,25 @@
 
 	<!-- 16 character serial number -->
 	<serial>                </serial>
+
+	<!-- Custom mode pages, base64 encoded, up to 1024 bytes.-->
+	<modePages>
+
+	</modePages>
+
+	<!-- Custom inquiry VPD pages, base64 encoded, up to 1024 bytes.-->
+	<vpd>
+
+	</vpd>
 </SCSITarget>
 <SCSITarget id="2">
 	<enabled>true</enabled>
-	<unitAttention>false</unitAttention>
-	<parity>false</parity>
-	<!-- ********************************************************
-	Only set to true when using with a fast SCSI2 host
- 	controller. This can cause problems with older/slower
-	 hardware.
-	********************************************************* -->
-	<enableScsi2>true</enableScsi2>
-	<!-- ********************************************************
-	Setting to 'true' will result in increased performance at the
-	cost of lower noise immunity.
-	Only set to true when using short cables with only 1 or two
-	devices. This should remain off when using external SCSI1 DB25
-	cables.
-	********************************************************* -->
-	<disableGlitchFilter>false</disableGlitchFilter>
 
 	<!-- ********************************************************
 	Space separated list. Available options:
 	apple		Returns Apple-specific mode pages
+	omti		OMTI host non-standard link control
+	xebec		XEBEC ignore step options in control byte
 	********************************************************* -->
 	<quirks></quirks>
 
@@ -322,5 +358,15 @@
 
 	<!-- 16 character serial number -->
 	<serial>                </serial>
+
+	<!-- Custom mode pages, base64 encoded, up to 1024 bytes.-->
+	<modePages>
+
+	</modePages>
+
+	<!-- Custom inquiry VPD pages, base64 encoded, up to 1024 bytes.-->
+	<vpd>
+
+	</vpd>
 </SCSITarget>
 </SCSI2SD>
